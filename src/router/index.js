@@ -1,15 +1,15 @@
-import { createRouter, createWebHashHistory} from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import { createRouter, createWebHashHistory } from "vue-router";
+import PokeView from "../views/PokeView.vue";
 
+const routes = [
+  {
+    path: "/",
+    name: "home",
+    component: PokeView,
+  },
+];
 const router = createRouter({
+  routes,
   history: createWebHashHistory(),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: HomeView
-    },
-  ]
-})
-
-export default router
+});
+export default router;

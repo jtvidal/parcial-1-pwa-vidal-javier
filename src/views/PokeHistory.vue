@@ -8,6 +8,6 @@ export default {
 </script>
 <template>
     <div>
-        <HeaderTwo>Pokemon History Viewer</HeaderTwo>
+        <HeaderTwo>POKéMON HISTORY VIEW</HeaderTwo>
     </div>
 </template>

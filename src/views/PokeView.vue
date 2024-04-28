@@ -1,6 +1,7 @@
 <script>
 import {getPokemons} from '../services/pokemon';
 import HeaderTwo from '../components/headers/HeaderTwo.vue';
+import Pokemon from '../components/Pokemon.vue';
 
 export default {
     name:'PokeView',
@@ -13,11 +14,18 @@ export default {
     },
     mounted(){
         getPokemons(this.url);
+    },
+    methods: {
+      
     }
 };
 </script>
 <template>
   <div>
-    <HeaderTwo>Pokedex</HeaderTwo>
+    <HeaderTwo>POKéDEX</HeaderTwo>
+
+    <div>
+
+    </div>
   </div>
 </template>

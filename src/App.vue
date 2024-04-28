@@ -14,7 +14,7 @@ import RangeSearch from "./components/RangeSearch.vue";
     </div>
   </header>
   <main>
-    <h1 class="text-4xl text-center font-bold p-4">Pokemon Viewer</h1>
+    <h1 class="text-4xl text-center font-bold p-4">POKéMON VIEWER</h1>
     <div>
       <RangeSearch />
     </div>

@@ -1,8 +1,10 @@
 <script>
 import {getPokemons} from '../services/pokemon';
+import HeaderTwo from '../components/headers/HeaderTwo.vue';
 
 export default {
     name:'PokeView',
+    components:{HeaderTwo},
     data(){
         return{
             pokemonList:[],
@@ -16,6 +18,6 @@ export default {
 </script>
 <template>
   <div>
-    <h2 class="text-gray-500">Home Page</h2>
+    <HeaderTwo>Pokedex</HeaderTwo>
   </div>
 </template>

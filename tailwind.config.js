@@ -3,7 +3,11 @@ export default {
   content: ["./index.html",
   "./src/**/*.{vue,js,ts,jsx,tsx,ttf,woff,eot,svg}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        pokemon: ['Pokemon GB']
+      }
+    },
   },
   plugins: [],
 };

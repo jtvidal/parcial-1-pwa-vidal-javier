@@ -10,21 +10,31 @@ export default {
   data() {
     return {
       pokemonList: [],
-      limit:0,
-      url: `https://pokeapi.co/api/v2/pokemon?limit=100&offset=0`,  
-
+      limit: 0,
+      url: `https://pokeapi.co/api/v2/pokemon?limit=100&offset=0`,
     };
   },
   mounted() {
-    getPokemons(this.url);
+    this.showPokemons();
   },
-  methods:{
-    setLimit(amount){
+
+  methods: {
+    /**
+     *
+     * @param {Number} amount used to capture child RangeSearch property 'amount' value
+     */
+    async setLimit(amount) {
       this.limit = amount;
       this.url = `https://pokeapi.co/api/v2/pokemon?limit=${this.limit}&offset=0`;
-      getPokemons(this.url);
-    }
-  }
+      this.pokemonList = getPokemons(this.url)
+      console.log('Pokémon Search',await this.pokemonList);
+    },
+
+    async showPokemons() {
+      this.pokemonList = getPokemons(this.url);
+      console.log("Pokémon List: ", await this.pokemonList);
+    },
+  },
 };
 </script>
 <template>

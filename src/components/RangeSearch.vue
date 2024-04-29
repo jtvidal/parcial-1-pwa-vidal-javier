@@ -7,6 +7,9 @@ export default {
     };
   },
   methods:{
+    /**
+     * $emit amount property value to parent PokemonView component 
+     */
     setAmount(){
       console.log(this.amount);
       this.$emit('limit-value',this.amount);
@@ -18,7 +21,7 @@ export default {
   <div class="border-double border-slate-950 border-[1rem] rounded-lg mx-4">
     <form
       id="range-search"
-      @submit.prevent="setAmount"
+      @submit.prevent="setAmount()"
       action="#"
       method="get"
       enctype="multipart/form-data"

@@ -1,6 +1,5 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
-import RangeSearch from "./components/RangeSearch.vue";
 </script>
 
 <!-- Template -->
@@ -14,9 +13,8 @@ import RangeSearch from "./components/RangeSearch.vue";
     </div>
   </header>
   <main>
-    <h1 class="text-4xl text-center font-bold p-4">POKéMON VIEWER</h1>
+    <h1 class="text-4xl text-center font-pokemon font-bold p-4 mt-2">POKéMON VIEWER</h1>
     <div>
-      <RangeSearch />
     </div>
     <RouterView />
   </main>
@@ -24,7 +22,4 @@ import RangeSearch from "./components/RangeSearch.vue";
 
 <!-- Styles -->
 <style scoped>
-h1{
-  font-family: 'Pokemon GB',sans-serif;
-}
 </style>

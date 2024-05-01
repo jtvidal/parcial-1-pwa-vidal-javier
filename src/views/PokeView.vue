@@ -1,12 +1,13 @@
 <script>
-import { getPokemons } from "../services/pokemon";
+import { getData } from "../services/pokemon";
 import HeaderTwo from "../components/headers/HeaderTwo.vue";
-import Pokemon from "../components/Pokemon.vue";
+import PokemonCard from "../components/PokemonCard.vue";
 import RangeSearch from "../components/RangeSearch.vue";
 
 export default {
   name: "PokeView",
-  components: { HeaderTwo, Pokemon, RangeSearch },
+  components: { HeaderTwo, PokemonCard, RangeSearch },
+  props: ["objectPokemon"],
   data() {
     return {
       pokemonList: [],
@@ -14,36 +15,40 @@ export default {
       url: `https://pokeapi.co/api/v2/pokemon?limit=100&offset=0`,
     };
   },
-  mounted() {
-    this.showPokemons();
+  async mounted() {
+    this.pokemonList = await getData(this.url);
   },
 
   methods: {
     /**
      *
-     * @param {Number} amount used to capture child RangeSearch property 'amount' value
+     * @param {} amount used to capture child RangeSearch property 'amount' value
      */
-    async setLimit(amount) {
+    async getLimit(amount) {
       this.limit = amount;
       this.url = `https://pokeapi.co/api/v2/pokemon?limit=${this.limit}&offset=0`;
-      this.pokemonList = getPokemons(this.url)
-      console.log('Pokémon Search',await this.pokemonList);
+      this.pokemonList = await getData(this.url);
+      console.log("Pokémon Search", this.pokemonList);
     },
 
-    async showPokemons() {
-      this.pokemonList = getPokemons(this.url);
-      console.log("Pokémon List: ", await this.pokemonList);
-    },
   },
 };
 </script>
 <template>
   <div>
     <div>
-      <RangeSearch @limit-value="setLimit" />
+      <range-search @limit-value="getLimit"> </range-search>
     </div>
     <div>
       <HeaderTwo>POKéDEX</HeaderTwo>
+      <div>
+        <div class="poke-list container">
+          <pokemon-card
+            v-for="poke in pokemonList"
+            :object-pokemon="poke"
+          ></pokemon-card>
+        </div>
+      </div>
     </div>
   </div>
 </template>

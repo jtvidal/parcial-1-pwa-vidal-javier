@@ -1,10 +1,11 @@
 <script>
+import { getPokemon } from "@/services/pokemon";
 export default {
   name: "PokemonCard",
   props: { objectPokemon: Object },
   data() {
     return {
-      // data: "",
+      pokemonData: Object,
       url: this.objectPokemon.url,
       name: this.objectPokemon.name,
       // avatar: "",
@@ -12,14 +13,13 @@ export default {
       // icon: "",
     };
   },
-  mounted() {},
+  async mounted(){
+    this.pokemonData = await getPokemon(this.url);
+  },
   methods: {
-    /**
-     *
-     */
-    // getAvatar() {
-    //   this.avatar = this.data.sprites.front_default;
-    // },
+    getAvatar() {
+
+    },
     // /**
     //  *
     //  */

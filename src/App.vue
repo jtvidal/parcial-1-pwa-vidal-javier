@@ -22,4 +22,7 @@ import { RouterLink, RouterView } from "vue-router";
 
 <!-- Styles -->
 <style scoped>
+*{
+  border: dashed 0.5px #232323;
+}
 </style>

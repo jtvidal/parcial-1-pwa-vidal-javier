@@ -6,28 +6,32 @@ export default {
       amount: 0,
     };
   },
-  methods:{
+  methods: {
     /**
-     * $emit amount property value to parent PokemonView component 
+     * $emit amount property value to parent PokemonView component
      */
-    setAmount(){
+    setAmount() {
       console.log(this.amount);
-      this.$emit('limit-value',this.amount);
-    }
-  }
+      this.$emit("limit-value", this.amount);
+    },
+  },
 };
 </script>
 <template>
-  <div class="border-double border-slate-950 border-[1rem] rounded-lg mx-4">
+  <div
+    class="w-full xsm:w-2/4 border-double border-slate-950 border-[1rem] rounded-lg"
+  >
     <form
       id="range-search"
       @submit.prevent="setAmount()"
       action="#"
       method="get"
       enctype="multipart/form-data"
-      class="flex gap-4 p-2 justify-center border-solid border-4 border-black"
+      class="flex flex-col xxsm:flex gap-4 justify-center border-solid border-4 border-black p-2 xsm:flex-col"
     >
-      <label class="flex gap-2 justify-center items-center" for="poke_amount"
+      <label
+        class="flex xsm:flex-col gap-2 items-center"
+        for="poke_amount"
         ><p>Cantidad a buscar:</p>
         <input
           type="number"
@@ -39,7 +43,11 @@ export default {
         />
         <span>(máximo 100)</span>
       </label>
-      <input type="submit" value="Search" class="bg-red-500 p-2 text-slate-100">
+      <input
+        type="submit"
+        value="Search"
+        class="bg-red-500 p-2 text-slate-100"
+      />
     </form>
   </div>
 </template>

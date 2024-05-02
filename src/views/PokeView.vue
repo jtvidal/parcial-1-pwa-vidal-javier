@@ -3,10 +3,11 @@ import { getData } from "../services/pokemon";
 import HeaderTwo from "../components/headers/HeaderTwo.vue";
 import PokemonCard from "../components/PokemonCard.vue";
 import RangeSearch from "../components/RangeSearch.vue";
+import NameSearch from "@/components/NameSearch.vue";
 
 export default {
   name: "PokeView",
-  components: { HeaderTwo, PokemonCard, RangeSearch },
+  components: { HeaderTwo, PokemonCard, RangeSearch, NameSearch },
   props: ["objectPokemon"],
   data() {
     return {
@@ -22,7 +23,7 @@ export default {
   methods: {
     /**
      *
-     * @param {} amount used to capture child RangeSearch property 'amount' value
+     * @param {} amount used to capture child's RangeSearch property 'amount' value.
      */
     async getLimit(amount) {
       this.limit = amount;
@@ -36,11 +37,14 @@ export default {
 </script>
 <template>
   <div>
-    <div>
+    <!-- Search components -->
+    <div class="flex flex-col xsm:flex-row xsm:flex gap-2 p-2">
+      <name-search></name-search>
       <range-search @limit-value="getLimit"> </range-search>
     </div>
     <div>
       <HeaderTwo>POKéDEX</HeaderTwo>
+      <!-- Pokémon Renderer -->
       <div>
         <div class="poke-list container">
           <pokemon-card

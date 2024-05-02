@@ -6,6 +6,10 @@ export default {
     extend: {
       fontFamily: {
         pokemon: ['Pokemon GB']
+      },
+      screens:{
+        'xxsm':'320px',
+        'xsm':'460px', 
       }
     },
   },

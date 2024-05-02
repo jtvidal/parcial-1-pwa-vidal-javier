@@ -5,34 +5,32 @@ export default {
   props: { objectPokemon: Object },
   data() {
     return {
-      pokemonData: Object,
+      pokemon: Object,
       url: this.objectPokemon.url,
       name: this.objectPokemon.name,
-      // avatar: "",
-      // types: [],
-      // icon: "",
+      sprites: null,
+      types: null,
+      abilities: null,
     };
   },
-  async mounted(){
-    this.pokemonData = await getPokemon(this.url);
+  async mounted() {
+    this.pokemon = await getPokemon(this.url);
+    this.types = await this.pokemon.types;
+    this.abilities = await this.pokemon.abilities;
+    this.sprites = await this.pokemon.sprites;
+    console.log('Types: ', this.types);
+    console.log('Abilities: ', this.abilities);
+    console.log('Sprites: ', this.sprites );
   },
   methods: {
-    getAvatar() {
 
-    },
-    // /**
-    //  *
-    //  */
-    // getType() {
-    //   this.types = this.data.types;
-    // },
   },
 };
 </script>
 <template>
   <div>
     <h3>Pokemon: {{ name }}</h3>
-    <p>Url: {{ url }}</p>
+    
     <!-- <div class="image">
       <img :src="avatar" alt="Pokemon Image" />
     </div> -->

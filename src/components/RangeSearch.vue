@@ -27,26 +27,26 @@ export default {
       action="#"
       method="get"
       enctype="multipart/form-data"
-      class="flex flex-col xxsm:flex gap-4 justify-center border-solid border-4 border-black p-2 xsm:flex-col"
+      class="flex flex-col xxsm:flex gap-4 justify-center border-solid border-4 border-slate-950 p-2 xsm:flex-col"
     >
       <label
         class="flex xsm:flex-col gap-2 items-center"
         for="poke_amount"
-        ><p>Cantidad a buscar:</p>
+        ><p>Search amount:</p>
         <input
           type="number"
           id="poke_amount"
           min="1"
           max="100"
-          class="border-slate-300 border-2 ps-2"
+          class="text-center border-slate-300 border-2 ps-2"
           v-model="amount"
         />
-        <span>(máximo 100)</span>
+        <span>(máx 100)</span>
       </label>
       <input
         type="submit"
         value="Search"
-        class="bg-red-500 p-2 text-slate-100"
+        class="bg-rose-500 p-2 text-slate-100 hover:bg-rose-400 cursor-pointer"
       />
     </form>
   </div>

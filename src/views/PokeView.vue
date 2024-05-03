@@ -4,16 +4,17 @@ import HeaderTwo from "../components/headers/HeaderTwo.vue";
 import PokemonCard from "../components/PokemonCard.vue";
 import RangeSearch from "../components/RangeSearch.vue";
 import NameSearch from "@/components/NameSearch.vue";
+import PokePagination from "@/components/PokePagination.vue";
 
 export default {
   name: "PokeView",
-  components: { HeaderTwo, PokemonCard, RangeSearch, NameSearch },
+  components: { HeaderTwo, PokemonCard, RangeSearch, NameSearch, PokePagination },
   props: ["objectPokemon"],
   data() {
     return {
       pokemonList: [],
       limit: 0,
-      url: `https://pokeapi.co/api/v2/pokemon?limit=100&offset=0`,
+      url: `https://pokeapi.co/api/v2/pokemon?limit=10&offset=0`,
     };
   },
   async mounted() {
@@ -31,7 +32,6 @@ export default {
       this.pokemonList = await getData(this.url);
       console.log("Pokémon Search", this.pokemonList);
     },
-
   },
 };
 </script>
@@ -46,12 +46,14 @@ export default {
       <HeaderTwo>POKéDEX</HeaderTwo>
       <!-- Pokémon Renderer -->
       <div>
-        <div class="poke-list container">
+        <div id="poke-container" class="container">
           <pokemon-card
             v-for="poke in pokemonList"
             :object-pokemon="poke"
           ></pokemon-card>
         </div>
+        <!-- Pagination -->
+        <poke-pagination></poke-pagination>
       </div>
     </div>
   </div>

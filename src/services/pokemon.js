@@ -9,6 +9,10 @@ export const getData = async (url) => {
   const rawData = await dataUrl;
   const data = await rawData.json();
   console.log("data.json(): ", data);
+  const nextPage = data.next;
+  const previousPage = data.previous;
+  console.log('previous URL: ',previousPage);
+  console.log('Next URL: ', nextPage);
   const results = data.results;
   console.log("Data results: ", results);
   return results;
@@ -22,7 +26,11 @@ export const getData = async (url) => {
   //   })
   //   .catch(console.log(Error));
 };
-
+/**
+ * Fetches the data form an individual pokemon
+ * @param {String} url 
+ * @returns Object
+ */
 export const getPokemon = async (url) => {
   const pokemonUrl = fetch(url);
   const pokemonData = await pokemonUrl;
@@ -30,3 +38,17 @@ export const getPokemon = async (url) => {
   console.log("Pokemon", pokemon);
   return pokemon;
 };
+
+
+    /**
+     * Goes to next page.
+     */
+export const next= async (url)=>{
+      return await this.getData(url);
+    }
+    /**
+     *Goes 1(one) page back.
+     */
+export const previous = async (url)=>{
+      return await this.getData(url);
+    }

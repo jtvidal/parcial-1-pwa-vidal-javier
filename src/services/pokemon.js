@@ -8,14 +8,10 @@ export const getData = async (url) => {
   const dataUrl = fetch(url);
   const rawData = await dataUrl;
   const data = await rawData.json();
-  console.log("data.json(): ", data);
-  const nextPage = data.next;
-  const previousPage = data.previous;
-  console.log('previous URL: ',previousPage);
-  console.log('Next URL: ', nextPage);
+  console.log("response: ", data);
   const results = data.results;
-  console.log("Data results: ", results);
-  return results;
+  console.log("results: ", results);
+  return results
   // return fetch(url)
   //   .then((response) => {
   //     return response.json();
@@ -27,28 +23,14 @@ export const getData = async (url) => {
   //   .catch(console.log(Error));
 };
 /**
- * Fetches the data form an individual pokemon
- * @param {String} url 
+ * Fetches the data form an url
+ * @param {String} url
  * @returns Object
  */
-export const getPokemon = async (url) => {
-  const pokemonUrl = fetch(url);
-  const pokemonData = await pokemonUrl;
-  const pokemon = await pokemonData.json();
-  console.log("Pokemon", pokemon);
-  return pokemon;
+export const getUrl = async (url) => {
+  const infoUrl = fetch(url);
+  const urlResponse = await infoUrl;
+  const urlData = await urlResponse.json();
+  // console.log("url data:", urlData);
+  return urlData;
 };
-
-
-    /**
-     * Goes to next page.
-     */
-export const next= async (url)=>{
-      return await this.getData(url);
-    }
-    /**
-     *Goes 1(one) page back.
-     */
-export const previous = async (url)=>{
-      return await this.getData(url);
-    }

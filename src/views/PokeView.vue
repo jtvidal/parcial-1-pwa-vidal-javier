@@ -8,16 +8,23 @@ import PokePagination from "@/components/PokePagination.vue";
 
 export default {
   name: "PokeView",
-  components: { HeaderTwo, PokemonCard, RangeSearch, NameSearch, PokePagination },
-  props: ["objectPokemon"],
+  components: {
+    HeaderTwo,
+    PokemonCard,
+    RangeSearch,
+    NameSearch,
+    PokePagination,
+  },
+  props: { objectPokemon: Object, initialUrl: null },
   data() {
     return {
       pokemonList: [],
       limit: 0,
-      url: `https://pokeapi.co/api/v2/pokemon?limit=10&offset=0`,
+      url: "https://pokeapi.co/api/v2/pokemon?limit=10&offset=0",
     };
   },
   async mounted() {
+    console.log("URL mounted: ", this.url);
     this.pokemonList = await getData(this.url);
   },
 
@@ -32,6 +39,19 @@ export default {
       this.pokemonList = await getData(this.url);
       console.log("Pokémon Search", this.pokemonList);
     },
+
+    async nextPage(nextUrl) {
+      this.url = await nextUrl;
+      console.log("New URl to fetch:", this.url);
+      this.pokemonList = await getData(this.url);
+      console.log("New pokemonList[]: ", this.pokemonList);
+    },
+    async prevPage(prevUrl) {
+      this.url = await prevUrl;
+      console.log("New URl to fetch:", this.url);
+      this.pokemonList = await getData(this.url);
+      console.log("new pokemonList[]: ", this.pokemonList);
+    },
   },
 };
 </script>
@@ -44,16 +64,21 @@ export default {
     </div>
     <div>
       <HeaderTwo>POKéDEX</HeaderTwo>
-      <!-- Pokémon Renderer -->
       <div>
-        <div id="poke-container" class="container">
+        <!-- Pokémon Container -->
+        <div id="poke-container">
+          <!-- Pokémon Renderer -->
           <pokemon-card
             v-for="poke in pokemonList"
             :object-pokemon="poke"
           ></pokemon-card>
         </div>
         <!-- Pagination -->
-        <poke-pagination></poke-pagination>
+        <poke-pagination
+          :initial-url="url"
+          @next-page="nextPage"
+          @previous-page="prevPage"
+        ></poke-pagination>
       </div>
     </div>
   </div>

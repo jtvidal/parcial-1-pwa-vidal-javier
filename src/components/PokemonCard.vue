@@ -1,5 +1,5 @@
 <script>
-import { getPokemon } from "@/services/pokemon";
+import { getUrl } from "@/services/pokemon";
 export default {
   name: "PokemonCard",
   props: { objectPokemon: Object },
@@ -14,13 +14,13 @@ export default {
     };
   },
   async mounted() {
-    this.pokemon = await getPokemon(this.url);
+    this.pokemon = await getUrl(this.url);
     this.types = await this.pokemon.types;
     this.abilities = await this.pokemon.abilities;
     this.sprites = await this.pokemon.sprites;
-    console.log('Types: ', this.types);
-    console.log('Abilities: ', this.abilities);
-    console.log('Sprites: ', this.sprites );
+    // console.log('Types: ', this.types);
+    // console.log('Abilities: ', this.abilities);
+    // console.log('Sprites: ', this.sprites );
   },
   methods: {
 

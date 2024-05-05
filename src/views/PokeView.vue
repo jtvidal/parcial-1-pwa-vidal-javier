@@ -15,6 +15,8 @@ export default {
   },
   props: {
     objectPokemon: Object,
+    pokeName: null,
+    pokeUrl: null
   },
   data() {
     return {
@@ -33,7 +35,7 @@ export default {
 
   methods: {
     /**
-     *
+     *Gets next and previous values of the fetched url.
      * @param url
      */
     async getPages(url) {
@@ -59,7 +61,7 @@ export default {
 
     async nextPage() {
       console.log("New url next:", await this.nextUrl);
-      this.url = this.nextUrl
+      this.url = await this.nextUrl
       console.log('url: ', this.url);
       this.pokemonList = await getData(this.url);
       console.log("New pokemonList[]: ", this.pokemonList);
@@ -97,6 +99,8 @@ export default {
           <pokemon-card
             v-for="poke in pokemonList"
             :object-pokemon="poke"
+            :poke-name="poke.name"
+            :poke-url="poke.url"
           ></pokemon-card>
         </div>
         <!-- Pagination -->

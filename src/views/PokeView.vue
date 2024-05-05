@@ -28,7 +28,6 @@ export default {
     };
   },
   async mounted() {
-    
     console.log("URL mounted: ", this.url);
     this.pokemonList = await getData(this.url);
     this.getPages(this.url);
@@ -44,9 +43,9 @@ export default {
       const rawData = await data;
       // console.log("response: ", rawData);
       this.nextUrl = await rawData.next;
-      console.log("next: ", this.nextUrl);
+      console.log("Viewer next: ", this.nextUrl);
       this.prevUrl = await rawData.previous;
-      console.log("previous:", this.prevUrl);
+      console.log("Viewer previous:", this.prevUrl);
     },
 
     /**
@@ -94,7 +93,11 @@ export default {
           ></pokemon-card>
         </div>
         <!-- Pagination -->
-        <poke-pagination :initial-url="url" :next="nextUrl" :previous="prevUrl"></poke-pagination>
+        <poke-pagination
+          :initial-url="url"
+          :next="nextUrl"
+          :previous="prevUrl"
+        ></poke-pagination>
       </div>
     </div>
   </div>

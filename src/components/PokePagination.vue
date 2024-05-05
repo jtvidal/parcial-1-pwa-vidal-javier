@@ -12,7 +12,9 @@ export default {
   },
   mounted() {
     this.initialUrl = this.$attrs['initial-url'];
-    console.log("URL to Pagination: ", this.initialUrl);
+    console.log("Pagination initialUrl: ", this.initialUrl);
+    console.log('Pagination next: ', this.next);
+    console.log('Pagination previous: ', this.previous);
   },
   methods: {
     // /**

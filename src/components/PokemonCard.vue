@@ -29,7 +29,7 @@ export default {
 </script>
 <template>
   <div>
-    <h3>Pokemon: {{ name }}</h3>
+    <h3 class="uppercase">{{ name }}</h3>
     
     <!-- <div class="image">
       <img :src="avatar" alt="Pokemon Image" />

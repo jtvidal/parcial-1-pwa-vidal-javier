@@ -4,7 +4,6 @@ import HeaderTwo from "../components/headers/HeaderTwo.vue";
 import PokemonCard from "../components/PokemonCard.vue";
 import RangeSearch from "../components/RangeSearch.vue";
 import NameSearch from "@/components/NameSearch.vue";
-import PokePagination from "@/components/PokePagination.vue";
 
 export default {
   name: "PokeView",
@@ -13,7 +12,6 @@ export default {
     PokemonCard,
     RangeSearch,
     NameSearch,
-    PokePagination,
   },
   props: {
     objectPokemon: Object,
@@ -30,7 +28,7 @@ export default {
   async mounted() {
     console.log("URL mounted: ", this.url);
     this.pokemonList = await getData(this.url);
-    this.getPages(this.url);
+    await this.getPages(this.url);
   },
 
   methods: {
@@ -59,18 +57,24 @@ export default {
       console.log("Pokémon Search", this.pokemonList);
     },
 
-    // async nextPage(nextUrl) {
-    //   this.url = nextUrl;
-    //   console.log("New URl to fetch:", this.url);
-    //   this.pokemonList = await getData(this.url);
-    //   console.log("New pokemonList[]: ", this.pokemonList);
-    // },
-    // async prevPage(prevUrl) {
-    //   this.url = prevUrl;
-    //   console.log("New URl to fetch:", this.url);
-    //   this.pokemonList = await getData(this.url);
-    //   console.log("new pokemonList[]: ", this.pokemonList);
-    // },
+    async nextPage() {
+      console.log("New url next:", await this.nextUrl);
+      this.url = this.nextUrl
+      console.log('url: ', this.url);
+      this.pokemonList = await getData(this.url);
+      console.log("New pokemonList[]: ", this.pokemonList);
+      this.getPages(this.url);
+    },
+    async prevPage() {
+      console.log("New url previous:", await this.prevUrl);
+      this.url = await this.prevUrl;
+      console.log('url: ',this.url);
+      this.pokemonList = await getData(this.url);
+      console.log("New pokemonList[]: ", this.pokemonList);
+      this.getPages(this.url);
+      // this.pokemonList = await getData(this.url);
+      // console.log("new pokemonList[]: ", this.pokemonList);
+    },
   },
 };
 </script>
@@ -85,7 +89,10 @@ export default {
       <HeaderTwo>POKéDEX</HeaderTwo>
       <div>
         <!-- Pokémon Container -->
-        <div id="poke-container">
+        <div
+          id="poke-container"
+          class="text-center border-solid border-2 border-zinc-400 my-2 p-2"
+        >
           <!-- Pokémon Renderer -->
           <pokemon-card
             v-for="poke in pokemonList"
@@ -93,11 +100,12 @@ export default {
           ></pokemon-card>
         </div>
         <!-- Pagination -->
-        <poke-pagination
-          :initial-url="url"
-          :next="nextUrl"
-          :previous="prevUrl"
-        ></poke-pagination>
+        <div
+          class="flex border-solid border-zinc-400 border-2 p-2 justify-center gap-4 text-zinc-900"
+        >
+          <button @click="prevPage" class="underline hover:text-rose-600">Previous</button>
+          <button @click="nextPage" class="underline hover:text-rose-600">Next</button>
+        </div>
       </div>
     </div>
   </div>

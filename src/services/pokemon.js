@@ -3,6 +3,7 @@
  * getData(url) looks for pokemons data
  * within the endpoint(@param)
  * @param {} url  to fetch
+ * @returns [Array] results property of response object.
  */
 export const getData = async (url) => {
   const dataUrl = fetch(url);
@@ -11,7 +12,7 @@ export const getData = async (url) => {
   console.log("response: ", data);
   const results = data.results;
   console.log("results: ", results);
-  return results
+  return results;
   // return fetch(url)
   //   .then((response) => {
   //     return response.json();
@@ -23,7 +24,7 @@ export const getData = async (url) => {
   //   .catch(console.log(Error));
 };
 /**
- * Fetches the data form an url
+ * Fetches the data form a url
  * @param {String} url
  * @returns Object
  */
@@ -31,6 +32,6 @@ export const getUrl = async (url) => {
   const infoUrl = fetch(url);
   const urlResponse = await infoUrl;
   const urlData = await urlResponse.json();
-  // console.log("url data:", urlData);
+  console.log("url data:", urlData);
   return urlData;
 };

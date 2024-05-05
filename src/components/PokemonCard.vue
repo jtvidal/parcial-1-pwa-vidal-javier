@@ -1,13 +1,15 @@
 <script>
-import { getUrl } from "@/services/pokemon";
 export default {
   name: "PokemonCard",
-  props: { objectPokemon: Object, pokeUrl: null, pokeName:null },
+  props: {
+    objectPokemon: Object,
+  },
   data() {
     return {
     };
   },
   async mounted() {
+    
     // console.log("PokemonCard name: ", await this.name);
     // this.types = await this.objectPokemon.types;
     // this.abilities = await this.objectPokemon.abilities;
@@ -16,20 +18,15 @@ export default {
     // console.log('Abilities: ', this.abilities);
     // console.log('Sprites: ', this.sprites );
   },
-  methods: {
-    getPokemonData() {
-      this.url = this.objectPokemon.url;
-      this.name = this.objectPokemon.name;
-    },
-  },
+  methods: {},
 };
 </script>
 <template>
   <div>
-    <h3 class="uppercase">{{ pokeName }}</h3>
+    <h3 class="uppercase">{{ this.objectPokemon.name }}</h3>
 
     <!-- <div class="image">
       <img :src="avatar" alt="Pokemon Image" />
     </div> -->
   </div>
-</template> 
+</template>

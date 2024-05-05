@@ -15,8 +15,6 @@ export default {
   },
   props: {
     objectPokemon: Object,
-    pokeName: null,
-    pokeUrl: null
   },
   data() {
     return {
@@ -58,21 +56,26 @@ export default {
       this.pokemonList = await getData(this.url);
       console.log("Pokémon Search", this.pokemonList);
     },
-
+    /**
+     *
+     */
     async nextPage() {
       console.log("New url next:", await this.nextUrl);
-      this.url = await this.nextUrl
-      console.log('url: ', this.url);
+      this.url = await this.nextUrl;
+      console.log("url: ", this.url);
       this.pokemonList = await getData(this.url);
-      console.log("New pokemonList[]: ", this.pokemonList);
+      // console.log("New pokemonList[]: ", this.pokemonList);
       this.getPages(this.url);
     },
+    /**
+     * 
+     */
     async prevPage() {
       console.log("New url previous:", await this.prevUrl);
       this.url = await this.prevUrl;
-      console.log('url: ',this.url);
+      console.log("url: ", this.url);
       this.pokemonList = await getData(this.url);
-      console.log("New pokemonList[]: ", this.pokemonList);
+      // console.log("New pokemonList[]: ", this.pokemonList);
       this.getPages(this.url);
       // this.pokemonList = await getData(this.url);
       // console.log("new pokemonList[]: ", this.pokemonList);
@@ -99,16 +102,18 @@ export default {
           <pokemon-card
             v-for="poke in pokemonList"
             :object-pokemon="poke"
-            :poke-name="poke.name"
-            :poke-url="poke.url"
           ></pokemon-card>
         </div>
         <!-- Pagination -->
         <div
           class="flex border-solid border-zinc-400 border-2 p-2 justify-center gap-4 text-zinc-900"
         >
-          <button @click="prevPage" class="underline hover:text-rose-600">Previous</button>
-          <button @click="nextPage" class="underline hover:text-rose-600">Next</button>
+          <button @click="prevPage" class="underline hover:text-rose-600">
+            Previous
+          </button>
+          <button @click="nextPage" class="underline hover:text-rose-600">
+            Next
+          </button>
         </div>
       </div>
     </div>

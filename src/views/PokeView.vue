@@ -1,5 +1,5 @@
 <script>
-import { getData } from "../services/pokemon";
+import { getData, getUrl } from "../services/pokemon";
 import HeaderTwo from "../components/headers/HeaderTwo.vue";
 import PokemonCard from "../components/PokemonCard.vue";
 import RangeSearch from "../components/RangeSearch.vue";
@@ -15,20 +15,40 @@ export default {
     NameSearch,
     PokePagination,
   },
-  props: { objectPokemon: Object, initialUrl: null },
+  props: {
+    objectPokemon: Object,
+  },
   data() {
     return {
       pokemonList: [],
       limit: 0,
       url: "https://pokeapi.co/api/v2/pokemon?limit=10&offset=0",
+      nextUrl: null,
+      prevUrl: null,
     };
   },
   async mounted() {
+    
     console.log("URL mounted: ", this.url);
     this.pokemonList = await getData(this.url);
+    this.getPages(this.url);
   },
 
   methods: {
+    /**
+     *
+     * @param url
+     */
+    async getPages(url) {
+      const data = getUrl(url);
+      const rawData = await data;
+      // console.log("response: ", rawData);
+      this.nextUrl = await rawData.next;
+      console.log("next: ", this.nextUrl);
+      this.prevUrl = await rawData.previous;
+      console.log("previous:", this.prevUrl);
+    },
+
     /**
      *
      * @param {} amount used to capture child's RangeSearch property 'amount' value.
@@ -40,18 +60,18 @@ export default {
       console.log("Pokémon Search", this.pokemonList);
     },
 
-    async nextPage(nextUrl) {
-      this.url = await nextUrl;
-      console.log("New URl to fetch:", this.url);
-      this.pokemonList = await getData(this.url);
-      console.log("New pokemonList[]: ", this.pokemonList);
-    },
-    async prevPage(prevUrl) {
-      this.url = await prevUrl;
-      console.log("New URl to fetch:", this.url);
-      this.pokemonList = await getData(this.url);
-      console.log("new pokemonList[]: ", this.pokemonList);
-    },
+    // async nextPage(nextUrl) {
+    //   this.url = nextUrl;
+    //   console.log("New URl to fetch:", this.url);
+    //   this.pokemonList = await getData(this.url);
+    //   console.log("New pokemonList[]: ", this.pokemonList);
+    // },
+    // async prevPage(prevUrl) {
+    //   this.url = prevUrl;
+    //   console.log("New URl to fetch:", this.url);
+    //   this.pokemonList = await getData(this.url);
+    //   console.log("new pokemonList[]: ", this.pokemonList);
+    // },
   },
 };
 </script>
@@ -74,11 +94,7 @@ export default {
           ></pokemon-card>
         </div>
         <!-- Pagination -->
-        <poke-pagination
-          :initial-url="url"
-          @next-page="nextPage"
-          @previous-page="prevPage"
-        ></poke-pagination>
+        <poke-pagination :initial-url="url" :next="nextUrl" :previous="prevUrl"></poke-pagination>
       </div>
     </div>
   </div>

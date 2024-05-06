@@ -32,6 +32,6 @@ export const getUrl = async (url) => {
   const infoUrl = fetch(url);
   const urlResponse = await infoUrl;
   const urlData = await urlResponse.json();
-  console.log("url data:", urlData);
+  // console.log("url data:", urlData);
   return urlData;
 };

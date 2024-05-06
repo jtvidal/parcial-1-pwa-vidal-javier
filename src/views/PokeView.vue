@@ -1,7 +1,7 @@
 <script>
 import { getData, getUrl } from "../services/pokemon";
 import HeaderTwo from "../components/headers/HeaderTwo.vue";
-import PokemonCard from "../components/PokemonCard.vue";
+import PokemonCards from "../components/PokemonCards.vue";
 import RangeSearch from "../components/RangeSearch.vue";
 import NameSearch from "@/components/NameSearch.vue";
 
@@ -9,16 +9,17 @@ export default {
   name: "PokeView",
   components: {
     HeaderTwo,
-    PokemonCard,
+    PokemonCards,
     RangeSearch,
     NameSearch,
   },
   props: {
-    objectPokemon: Object,
+    arrayPokemon: Array,
   },
   data() {
     return {
       pokemonList: [],
+      pokemonData: [],
       limit: 0,
       url: "https://pokeapi.co/api/v2/pokemon?limit=10&offset=0",
       nextUrl: null,
@@ -29,9 +30,20 @@ export default {
     console.log("URL mounted: ", this.url);
     this.pokemonList = await getData(this.url);
     await this.getPages(this.url);
+    await this.getPokemons();
   },
 
   methods: {
+    /**
+     * Gets each pokemon info from the fetched pokemonList
+     * into a new Array pokemonData
+     */
+    async getPokemons() {
+      this.pokemonList.forEach(async (pokemon) => {
+        this.pokemonData.push(await getUrl(pokemon.url));
+        // console.log('pokemonData[]', this.pokemonData);
+      });
+    },
     /**
      *Gets next and previous values of the fetched url.
      * @param url
@@ -41,9 +53,38 @@ export default {
       const rawData = await data;
       // console.log("response: ", rawData);
       this.nextUrl = await rawData.next;
-      console.log("Viewer next: ", this.nextUrl);
+      // console.log("Viewer next: ", this.nextUrl);
       this.prevUrl = await rawData.previous;
-      console.log("Viewer previous:", this.prevUrl);
+      // console.log("Viewer previous:", this.prevUrl);
+    },
+
+    /**
+     *
+     */
+    async nextPage() {
+      this.pokemonData = [];
+      // console.log("New url next:", await this.nextUrl);
+      this.url = await this.nextUrl;
+      // console.log("url: ", this.url);
+      this.pokemonList = await getData(this.url);
+      await this.getPokemons();
+      // console.log("New pokemonList[]: ", this.pokemonList);
+      this.getPages(this.url);
+    },
+    /**
+     *
+     */
+    async prevPage() {
+      this.pokemonData =[];
+      // console.log("New url previous:", await this.prevUrl);
+      this.url = await this.prevUrl;
+      // console.log("url: ", this.url);
+      this.pokemonList = await getData(this.url);
+      await this.getPokemons();
+      // console.log("New pokemonList[]: ", this.pokemonList);
+      this.getPages(this.url);
+      // this.pokemonList = await getData(this.url);
+      // console.log("new pokemonList[]: ", this.pokemonList);
     },
 
     /**
@@ -55,30 +96,6 @@ export default {
       this.url = `https://pokeapi.co/api/v2/pokemon?limit=${this.limit}&offset=0`;
       this.pokemonList = await getData(this.url);
       console.log("Pokémon Search", this.pokemonList);
-    },
-    /**
-     *
-     */
-    async nextPage() {
-      console.log("New url next:", await this.nextUrl);
-      this.url = await this.nextUrl;
-      console.log("url: ", this.url);
-      this.pokemonList = await getData(this.url);
-      // console.log("New pokemonList[]: ", this.pokemonList);
-      this.getPages(this.url);
-    },
-    /**
-     * 
-     */
-    async prevPage() {
-      console.log("New url previous:", await this.prevUrl);
-      this.url = await this.prevUrl;
-      console.log("url: ", this.url);
-      this.pokemonList = await getData(this.url);
-      // console.log("New pokemonList[]: ", this.pokemonList);
-      this.getPages(this.url);
-      // this.pokemonList = await getData(this.url);
-      // console.log("new pokemonList[]: ", this.pokemonList);
     },
   },
 };
@@ -96,13 +113,10 @@ export default {
         <!-- Pokémon Container -->
         <div
           id="poke-container"
-          class="text-center border-solid border-2 border-zinc-400 my-2 p-2"
+          class="text-center my-2 p-2"
         >
           <!-- Pokémon Renderer -->
-          <pokemon-card
-            v-for="poke in pokemonList"
-            :object-pokemon="poke"
-          ></pokemon-card>
+          <pokemon-cards :array-pokemon="pokemonData"></pokemon-cards>
         </div>
         <!-- Pagination -->
         <div

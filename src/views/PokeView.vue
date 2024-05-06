@@ -20,6 +20,7 @@ export default {
     return {
       pokemonList: [],
       pokemonData: [],
+      savedPokemon:[],
       pokeId: null,
       pokemon: null,
       limit: 0,
@@ -37,10 +38,25 @@ export default {
   },
 
   methods: {
+    /**
+     * 
+     */
     getId(id) {
       this.pokeId = id;
       this.pokemon = this.modalPokemon(this.pokeId);
+      this.pokemonStorage(this.pokemon);
       console.log(this.pokeId);
+    },
+    /**
+     * 
+     * @param pokemon 
+     */
+    pokemonStorage(pokemon){
+        if(localStorage.data){
+          this.savedPokemon = JSON.parse(localStorage.getItem('data'));
+        }
+        this.savedPokemon.push(pokemon);
+        localStorage.setItem('data', JSON.stringify(this.savedPokemon));
     },
     /**
      *Gets each pokemon info from the fetched pokemonList
@@ -80,7 +96,6 @@ export default {
     async nextPage() {
       this.pokemonData = [];
       this.pokeId = null;
-      // console.log("New url next:", await this.nextUrl);
       this.url = await this.nextUrl;
       // console.log("url: ", this.url);
       this.pokemonList = await getData(this.url);
@@ -95,15 +110,12 @@ export default {
       this.last == true ? (this.last = false) : "";
       this.pokemonData = [];
       this.pokeId = null;
-      // console.log("New url previous:", await this.prevUrl);
       this.url = await this.prevUrl;
       // console.log("url: ", this.url);
       this.pokemonList = await getData(this.url);
       await this.getPokemons();
       // console.log("New pokemonList[]: ", this.pokemonList);
       this.getPages(this.url);
-      // this.pokemonList = await getData(this.url);
-      // console.log("new pokemonList[]: ", this.pokemonList);
     },
     /**
      *
@@ -132,17 +144,20 @@ export default {
 </script>
 
 <!-- TEMPLATE -->
+
 <template>
   <div class="relative">
+
     <!-- Search components -->
     <div class="flex flex-col xsm:flex-row xsm:flex gap-2 p-2">
       <name-search></name-search>
       <range-search @limit-value="getLimit"> </range-search>
     </div>
+
     <div>
       <HeaderTwo>POKéDEX</HeaderTwo>
+      <!-- Pokémon Container -->
       <div class="border-t-2 border-zinc-200">
-        <!-- Pokémon Container -->
         <div id="poke-container" class="text-center my-2 p-2">
           <!-- Pokémon Renderer -->
           <pokemon-cards
@@ -150,6 +165,7 @@ export default {
             @pokemon-id="getId"
           ></pokemon-cards>
         </div>
+
         <!-- Pagination -->
         <div
           class="flex border-zinc-200 border-t-2 p-2 justify-center gap-4 text-zinc-900"

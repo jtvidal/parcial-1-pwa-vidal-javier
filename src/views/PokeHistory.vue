@@ -3,7 +3,12 @@ import HeaderTwo from '../components/headers/HeaderTwo.vue';
 
 export default {
     name: 'PokeHistory',
-    components: {HeaderTwo}
+    components: {HeaderTwo},
+    data(){
+        return{
+            billPc:[],
+        }
+    }
 }
 </script>
 <template>

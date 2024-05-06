@@ -171,22 +171,53 @@ export default {
         </div>
       </div>
     </div>
+
     <!-- MODAL -->
     <div
       v-if="pokeId !== null"
       class="fixed top-0 bottom-0 left-0 right-0 bg-zinc-900 bg-opacity-50"
     >
-      <div class="flex flex-col bg-zinc-100 absolute top-1/2 w-full p-2">
-        <button @click="this.pokeId = null">close</button>
-        <div>
-          <h3>{{ pokemon.name }}</h3>
-          <div>
-            <h4>Abilities:</h4>
-            <p v-for="a in pokemon.abilities">{{ a.ability.name }}</p>
-          </div>
-          <div>
-            <h4>Types</h4>
-            <p v-for="t in pokemon.types">{{ t.type.name }}</p>
+      <div
+        class="flex flex-col justify-center items-center bg-zinc-100 border-4 border-zinc-900 rounded-lg mx-auto w-10/12 sm:w-2/4 p-4"
+      >
+        <div
+          class="w-full flex justify-end p-2 border-b-2 border-zinc-300 mb-4"
+        >
+          <button @click="this.pokeId = null" class="hover:text-rose-600">
+            Close
+          </button>
+        </div>
+        <!-- Modal content -->
+        <div class="flex flex-col self-center items-center">
+          <!-- Name -->
+          <h3 class="uppercase font-pokemon border-b-2 border-rose-500 mb-2">
+            {{ pokemon.name }}
+          </h3>
+          <!-- Img Abilities and Types -->
+          <div class="flex flex-col xsm:flex-row w-100">
+            <div>
+              <img
+                class="w-[200px] self-center"
+                :src="pokemon.sprites['front_default']"
+                :alt="pokemon.name + ' Image'"
+              />
+            </div>
+            <div class="flex xsm:flex-col justify-center">
+              <!-- Abilities -->
+              <div class="w-full">
+                <h4 class="text-red-600 font-semibold">Abilities</h4>
+                <p class="text-zinc-700" v-for="a in pokemon.abilities">
+                  {{ a.ability.name }}
+                </p>
+              </div>
+              <!-- Types -->
+              <div class="w-full">
+                <h4 class="text-rose-600 font-semibold">Types</h4>
+                <p class="text-zinc-700" v-for="t in pokemon.types">
+                  {{ t.type.name }}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -5,21 +5,23 @@ export default {
     arrayPokemon: Array,
   },
   data() {
-    return {
-    };
+    return {};
   },
   async mounted() {
     console.log("array in PokemonCards", this.arrayPokemon);
-
   },
   methods: {
+    sendId(id) {
+      console.log('@pokemon-id: ', id);
+      this.$emit("pokemon-id", id);
+    },
   },
 };
 </script>
 <template>
-  <div class="flex flex-col items-center">
+  <div class="grid grid-cols-1 xsm:grid-cols-2 gap-2">
     <div
-      class="flex flex-col w-full xxsm:w-11/12 xsm:w-8/12 sm:w-2/5 items-center border-4 border-zinc-800 rounded-lg my-2 p-4 gap-2"
+      class="flex flex-col m-auto w-10/12 items-center border-4 border-zinc-800 rounded-lg my-2 p-4 gap-2"
       v-for="pokemon in this.arrayPokemon"
     >
       <div>
@@ -33,8 +35,13 @@ export default {
       <!-- <div v-for="a in pokemon.abilities">
       <p class=" text-zinc-500">{{ a.ability.name }}</p>  
     </div> -->
-      <div class="bg-rose-700 px-2 py-1 rounded-md hover:bg-rose-500 w-2/6">
-        <button class="text-slate-100">Info</button>
+      <div class="w-2/6 xsm:w-2/4">
+        <button
+          @click="sendId(pokemon.id)"
+          class="text-slate-100 bg-rose-700 px-2 py-1 rounded-md hover:bg-rose-500 w-full"
+        >
+          Info
+        </button>
       </div>
     </div>
   </div>

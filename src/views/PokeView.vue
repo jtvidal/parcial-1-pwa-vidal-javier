@@ -20,6 +20,8 @@ export default {
     return {
       pokemonList: [],
       pokemonData: [],
+      pokeId: null,
+      pokemon: null,
       limit: 0,
       last: false,
       url: "https://pokeapi.co/api/v2/pokemon?limit=10&offset=0",
@@ -35,6 +37,11 @@ export default {
   },
 
   methods: {
+    getId(id) {
+      this.pokeId = id;
+      this.pokemon = this.modalPokemon(this.pokeId);
+      console.log(this.pokeId);
+    },
     /**
      *Gets each pokemon info from the fetched pokemonList
      * into a new Array pokemonData.
@@ -96,9 +103,6 @@ export default {
       // this.pokemonList = await getData(this.url);
       // console.log("new pokemonList[]: ", this.pokemonList);
     },
-    getLast(card) {
-      card == true ? this.last == true : (this.last = false);
-    },
     /**
      *
      * @param {} amount used to capture child's RangeSearch property 'amount' value.
@@ -109,9 +113,20 @@ export default {
       this.pokemonList = await getData(this.url);
       console.log("Pokémon Search", this.pokemonList);
     },
+
+    modalPokemon(id) {
+      let poke = null;
+      this.pokemonData.forEach((pokemon) => {
+        pokemon.id == id ? (poke = pokemon) : "";
+      });
+      console.log("Pokemon a modal: ", poke);
+      return poke;
+    },
   },
 };
 </script>
+
+<!-- TEMPLATE -->
 <template>
   <div>
     <!-- Search components -->
@@ -127,6 +142,7 @@ export default {
           <!-- Pokémon Renderer -->
           <pokemon-cards
             :array-pokemon="pokemonData"
+            @pokemon-id="getId"
           ></pokemon-cards>
         </div>
         <!-- Pagination -->
@@ -148,6 +164,13 @@ export default {
             Next
           </button>
         </div>
+      </div>
+    </div>
+    <!-- MODAL -->
+    <div v-if="pokeId !== null">
+      <div>
+        <button @click="this.pokeId = null">close</button>
+        <p>Modal of: {{ pokemon.name }}</p>
       </div>
     </div>
   </div>

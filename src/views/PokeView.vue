@@ -36,15 +36,16 @@ export default {
 
   methods: {
     /**
-     * Gets each pokemon info from the fetched pokemonList
-     * into a new Array pokemonData
+     *Gets each pokemon info from the fetched pokemonList
+     * into a new Array pokemonData.
+     * // Filters pokemon's id to set last:true when #id 100 is found.
      */
     async getPokemons() {
       this.pokemonList.forEach(async (pokemon) => {
-        const poke = await getUrl(pokemon.url)
+        const poke = await getUrl(pokemon.url);
         console.log(poke.id);
-        poke.id === 100 ? this.last = true : '';
-        this.last == true ? console.log('Last Card in View'):'';
+        poke.id === 100 ? (this.last = true) : "";
+        this.last == true ? console.log("Last Card in View") : "";
         this.pokemonData.push(poke);
         // console.log('pokemonData[]', this.pokemonData);
       });
@@ -83,6 +84,7 @@ export default {
      *
      */
     async prevPage() {
+      this.last == true ? (this.last = false) : "";
       this.pokemonData = [];
       // console.log("New url previous:", await this.prevUrl);
       this.url = await this.prevUrl;
@@ -94,8 +96,8 @@ export default {
       // this.pokemonList = await getData(this.url);
       // console.log("new pokemonList[]: ", this.pokemonList);
     },
-    getLast(card){
-      card == true ? this.last == true : this.last = false;
+    getLast(card) {
+      card == true ? this.last == true : (this.last = false);
     },
     /**
      *
@@ -123,7 +125,9 @@ export default {
         <!-- Pokémon Container -->
         <div id="poke-container" class="text-center my-2 p-2">
           <!-- Pokémon Renderer -->
-          <pokemon-cards :array-pokemon="pokemonData" @last-card="getLast"></pokemon-cards>
+          <pokemon-cards
+            :array-pokemon="pokemonData"
+          ></pokemon-cards>
         </div>
         <!-- Pagination -->
         <div

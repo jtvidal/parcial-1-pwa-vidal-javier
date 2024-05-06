@@ -59,7 +59,10 @@ export default {
     },
 
     /**
-     *
+     *Empties [pokemonData]
+     *Enters new list into [pokemonList]
+     *Fills [pokemonData] with the new list
+     *Disables button 'Next' if Pokemons amount reach 100.
      */
     async nextPage() {
       this.pokemonData = [];
@@ -75,7 +78,7 @@ export default {
      *
      */
     async prevPage() {
-      this.pokemonData =[];
+      this.pokemonData = [];
       // console.log("New url previous:", await this.prevUrl);
       this.url = await this.prevUrl;
       // console.log("url: ", this.url);
@@ -109,23 +112,28 @@ export default {
     </div>
     <div>
       <HeaderTwo>POKéDEX</HeaderTwo>
-      <div>
+      <div class="border-t-2 border-zinc-200">
         <!-- Pokémon Container -->
-        <div
-          id="poke-container"
-          class="text-center my-2 p-2"
-        >
+        <div id="poke-container" class="text-center my-2 p-2">
           <!-- Pokémon Renderer -->
           <pokemon-cards :array-pokemon="pokemonData"></pokemon-cards>
         </div>
         <!-- Pagination -->
         <div
-          class="flex border-solid border-zinc-400 border-2 p-2 justify-center gap-4 text-zinc-900"
+          class="flex border-zinc-200 border-t-2 p-2 justify-center gap-4 text-zinc-900"
         >
-          <button @click="prevPage" class="underline hover:text-rose-600">
+          <button
+            :disabled="prevUrl === null"
+            @click="prevPage"
+            class="disabled:text-zinc-400 underline hover:text-rose-600"
+          >
             Previous
           </button>
-          <button @click="nextPage" class="underline hover:text-rose-600">
+          <button
+            :disabled="nextUrl === null"
+            @click="nextPage"
+            class="underline hover:text-rose-600"
+          >
             Next
           </button>
         </div>

@@ -79,6 +79,7 @@ export default {
      */
     async nextPage() {
       this.pokemonData = [];
+      this.pokeId = null;
       // console.log("New url next:", await this.nextUrl);
       this.url = await this.nextUrl;
       // console.log("url: ", this.url);
@@ -93,6 +94,7 @@ export default {
     async prevPage() {
       this.last == true ? (this.last = false) : "";
       this.pokemonData = [];
+      this.pokeId = null;
       // console.log("New url previous:", await this.prevUrl);
       this.url = await this.prevUrl;
       // console.log("url: ", this.url);
@@ -113,7 +115,10 @@ export default {
       this.pokemonList = await getData(this.url);
       console.log("Pokémon Search", this.pokemonList);
     },
-
+    /**
+     *
+     * @param id
+     */
     modalPokemon(id) {
       let poke = null;
       this.pokemonData.forEach((pokemon) => {
@@ -128,7 +133,7 @@ export default {
 
 <!-- TEMPLATE -->
 <template>
-  <div>
+  <div class="relative">
     <!-- Search components -->
     <div class="flex flex-col xsm:flex-row xsm:flex gap-2 p-2">
       <name-search></name-search>
@@ -167,10 +172,23 @@ export default {
       </div>
     </div>
     <!-- MODAL -->
-    <div v-if="pokeId !== null">
-      <div>
+    <div
+      v-if="pokeId !== null"
+      class="fixed top-0 bottom-0 left-0 right-0 bg-zinc-900 bg-opacity-50"
+    >
+      <div class="flex flex-col bg-zinc-100 absolute top-1/2 w-full p-2">
         <button @click="this.pokeId = null">close</button>
-        <p>Modal of: {{ pokemon.name }}</p>
+        <div>
+          <h3>{{ pokemon.name }}</h3>
+          <div>
+            <h4>Abilities:</h4>
+            <p v-for="a in pokemon.abilities">{{ a.ability.name }}</p>
+          </div>
+          <div>
+            <h4>Types</h4>
+            <p v-for="t in pokemon.types">{{ t.type.name }}</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>

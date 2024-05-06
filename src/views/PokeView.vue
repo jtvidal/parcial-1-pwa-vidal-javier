@@ -21,6 +21,7 @@ export default {
       pokemonList: [],
       pokemonData: [],
       limit: 0,
+      last: false,
       url: "https://pokeapi.co/api/v2/pokemon?limit=10&offset=0",
       nextUrl: null,
       prevUrl: null,
@@ -40,7 +41,11 @@ export default {
      */
     async getPokemons() {
       this.pokemonList.forEach(async (pokemon) => {
-        this.pokemonData.push(await getUrl(pokemon.url));
+        const poke = await getUrl(pokemon.url)
+        console.log(poke.id);
+        poke.id === 100 ? this.last = true : '';
+        this.last == true ? console.log('Last Card in View'):'';
+        this.pokemonData.push(poke);
         // console.log('pokemonData[]', this.pokemonData);
       });
     },
@@ -89,7 +94,9 @@ export default {
       // this.pokemonList = await getData(this.url);
       // console.log("new pokemonList[]: ", this.pokemonList);
     },
-
+    getLast(card){
+      card == true ? this.last == true : this.last = false;
+    },
     /**
      *
      * @param {} amount used to capture child's RangeSearch property 'amount' value.
@@ -116,7 +123,7 @@ export default {
         <!-- Pokémon Container -->
         <div id="poke-container" class="text-center my-2 p-2">
           <!-- Pokémon Renderer -->
-          <pokemon-cards :array-pokemon="pokemonData"></pokemon-cards>
+          <pokemon-cards :array-pokemon="pokemonData" @last-card="getLast"></pokemon-cards>
         </div>
         <!-- Pagination -->
         <div
@@ -130,9 +137,9 @@ export default {
             Previous
           </button>
           <button
-            :disabled="nextUrl === null"
+            :disabled="last"
             @click="nextPage"
-            class="underline hover:text-rose-600"
+            class="disabled:text-zinc-400 underline hover:text-rose-600"
           >
             Next
           </button>

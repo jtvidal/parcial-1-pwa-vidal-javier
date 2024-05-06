@@ -6,25 +6,13 @@ export default {
   },
   data() {
     return {
-      last: false,
-      cards: [],
     };
   },
   async mounted() {
-    await this.arrayPokemon;
     console.log("array in PokemonCards", this.arrayPokemon);
-    this.cards = await this.arrayPokemon;
-    this.lastCard(this.cards);
+
   },
   methods: {
-    async lastCard(array) {
-      console.log('cards:', array);
-      array.forEach(async (element) => {
-        console.log(element.id);
-        // element.id == 100 ? (this.last = true) : "";
-      });
-      this.last == true ? console.log('Elemento 100 en pantalla') : '';
-    },
   },
 };
 </script>

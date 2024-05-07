@@ -20,9 +20,10 @@ export default {
     return {
       pokemonList: [],
       pokemonData: [],
-      savedPokemon:[],
+      savedPokemon: [],
       pokeId: null,
       pokemon: null,
+      repeated:false,
       limit: 0,
       last: false,
       url: "https://pokeapi.co/api/v2/pokemon?limit=10&offset=0",
@@ -40,7 +41,7 @@ export default {
 
   methods: {
     /**
-     * 
+     *
      */
     getId(id) {
       this.pokeId = id;
@@ -48,15 +49,20 @@ export default {
       this.pokemonStorage(this.pokemon);
     },
     /**
-     * 
-     * @param pokemon 
+     *
+     * @param pokemon
      */
-    pokemonStorage(pokemon){
-        if(localStorage.data){
-          this.savedPokemon = JSON.parse(localStorage.getItem('data'));
-        }
-        this.savedPokemon.push(pokemon);
-        localStorage.setItem('data', JSON.stringify(this.savedPokemon));
+    pokemonStorage(pokemon) {
+      if (localStorage.data) {
+        this.savedPokemon = JSON.parse(localStorage.getItem("data"));
+      }
+      this.savedPokemon.forEach((poke) => {
+        if (poke.id == pokemon.id) {
+          this.repeated = true
+        };
+      });
+      this.repeated == false ? this.savedPokemon.push(pokemon) : '';
+      localStorage.setItem("data", JSON.stringify(this.savedPokemon));
     },
     /**
      *Gets each pokemon info from the fetched pokemonList
@@ -80,7 +86,6 @@ export default {
       const rawData = await data;
       this.nextUrl = await rawData.next;
       this.prevUrl = await rawData.previous;
-
     },
 
     /**
@@ -141,7 +146,6 @@ export default {
 
 <template>
   <div class="relative">
-
     <!-- Search components -->
     <div class="flex flex-col xsm:flex-row xsm:flex gap-2 p-2">
       <name-search></name-search>
@@ -188,7 +192,7 @@ export default {
       class="fixed top-0 bottom-0 left-0 right-0 bg-zinc-900 bg-opacity-50"
     >
       <div
-        class="flex flex-col justify-center items-center bg-zinc-100 border-4 border-zinc-900 rounded-lg mx-auto w-10/12 sm:w-2/4 p-4"
+        class="flex flex-col absolute top-1/4 bottom-1/4 left-1/4 right-1/4 bg-zinc-100 border-4 border-zinc-900 rounded-lg mx-auto p-4"
       >
         <div
           class="w-full flex justify-end p-2 border-b-2 border-zinc-300 mb-4"
@@ -216,14 +220,20 @@ export default {
               <!-- Abilities -->
               <div class="w-full">
                 <h4 class="text-red-600 font-semibold">Abilities</h4>
-                <p class="text-zinc-700" v-for="a in pokemon.abilities">
+                <p
+                  class="text-zinc-700 font-semibold"
+                  v-for="a in pokemon.abilities"
+                >
                   {{ a.ability.name }}
                 </p>
               </div>
               <!-- Types -->
               <div class="w-full">
                 <h4 class="text-rose-600 font-semibold">Types</h4>
-                <p class="text-zinc-700" v-for="t in pokemon.types">
+                <p
+                  class="text-zinc-700 font-semibold"
+                  v-for="t in pokemon.types"
+                >
                   {{ t.type.name }}
                 </p>
               </div>

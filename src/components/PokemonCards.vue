@@ -12,7 +12,7 @@ export default {
   },
   methods: {
     sendId(id) {
-      console.log('@pokemon-id: ', id);
+      console.log("@pokemon-id: ", id);
       this.$emit("pokemon-id", id);
     },
   },
@@ -32,9 +32,6 @@ export default {
         />
       </div>
       <h3 class="uppercase font-bold">{{ pokemon.name }}</h3>
-      <!-- <div v-for="a in pokemon.abilities">
-      <p class=" text-zinc-500">{{ a.ability.name }}</p>  
-    </div> -->
       <div class="w-2/6 xsm:w-2/4">
         <button
           @click="sendId(pokemon.id)"

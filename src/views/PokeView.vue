@@ -30,6 +30,7 @@ export default {
       prevUrl: null,
     };
   },
+
   async mounted() {
     console.log("URL mounted: ", this.url);
     this.pokemonList = await getData(this.url);
@@ -45,7 +46,6 @@ export default {
       this.pokeId = id;
       this.pokemon = this.modalPokemon(this.pokeId);
       this.pokemonStorage(this.pokemon);
-      console.log(this.pokeId);
     },
     /**
      * 
@@ -66,11 +66,9 @@ export default {
     async getPokemons() {
       this.pokemonList.forEach(async (pokemon) => {
         const poke = await getUrl(pokemon.url);
-        console.log(poke.id);
         poke.id === 100 ? (this.last = true) : "";
         this.last == true ? console.log("Last Card in View") : "";
         this.pokemonData.push(poke);
-        // console.log('pokemonData[]', this.pokemonData);
       });
     },
     /**
@@ -80,11 +78,9 @@ export default {
     async getPages(url) {
       const data = getUrl(url);
       const rawData = await data;
-      // console.log("response: ", rawData);
       this.nextUrl = await rawData.next;
-      // console.log("Viewer next: ", this.nextUrl);
       this.prevUrl = await rawData.previous;
-      // console.log("Viewer previous:", this.prevUrl);
+
     },
 
     /**
@@ -97,10 +93,8 @@ export default {
       this.pokemonData = [];
       this.pokeId = null;
       this.url = await this.nextUrl;
-      // console.log("url: ", this.url);
       this.pokemonList = await getData(this.url);
       await this.getPokemons();
-      // console.log("New pokemonList[]: ", this.pokemonList);
       this.getPages(this.url);
     },
     /**
@@ -111,10 +105,8 @@ export default {
       this.pokemonData = [];
       this.pokeId = null;
       this.url = await this.prevUrl;
-      // console.log("url: ", this.url);
       this.pokemonList = await getData(this.url);
       await this.getPokemons();
-      // console.log("New pokemonList[]: ", this.pokemonList);
       this.getPages(this.url);
     },
     /**

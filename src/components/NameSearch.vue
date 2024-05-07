@@ -1,6 +1,14 @@
 <script>
 export default {
   name: "NameSearch",
+  data(){
+    return{
+      name:'',
+    }
+  },
+  methods:{
+    
+  }
 };
 </script>
 
@@ -9,6 +17,7 @@ export default {
     class="border-double border-slate-950 border-[1rem] rounded-lg w-full xsm:w-2/4"
   >
     <form
+    @submit.prevent=""
       class=" flex flex-col gap-4 justify-between border-solid border-4 border-slate-950 h-full p-2"
       action="#"
       method="get"
@@ -21,6 +30,7 @@ export default {
           type="search"
           id="poke_name"
           name="poke_name"
+          v-model="name"
         />
       </label>
 

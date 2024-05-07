@@ -114,9 +114,11 @@ export default {
      * @param {} amount used to capture child's RangeSearch property 'amount' value.
      */
     async getLimit(amount) {
+      this.pokemonData = [];
       this.limit = amount;
       this.url = `https://pokeapi.co/api/v2/pokemon?limit=${this.limit}&offset=0`;
       this.pokemonList = await getData(this.url);
+      await this.getPokemons();
       console.log("Pokémon Search", this.pokemonList);
     },
     /**

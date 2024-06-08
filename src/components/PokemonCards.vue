@@ -37,6 +37,7 @@ export default {
           @click="sendId(pokemon.id)"
           class="text-slate-100 bg-rose-700 px-2 py-1 rounded-md hover:bg-rose-500 w-full"
         >
+        <img src="../assets/pokeball.png" alt="pokeball img">
           Info
         </button>
       </div>

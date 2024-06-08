@@ -9,7 +9,14 @@ app.use(router);
 app.mount("#app");
 
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("poke-worker.js").then((registration) => {
-    console.log("poke service worker registered", registration);
+  window.addEventListener("load", (e) => {
+    navigator.serviceWorker
+      .register("poke-worker.js")
+      .then((registration) => {
+        console.log("Poke Service Worker registered", registration);
+      })
+      .catch((error) => {
+        console.error("Error in service worker registration: ", error);
+      });
   });
 }

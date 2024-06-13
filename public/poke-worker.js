@@ -6,11 +6,8 @@ const pokePreCache = [
   "/src/assets/pokeball.png",
   "/src/main.js",
   "/src/main.css",
-  "@vite-plugin-pwa/pwa-entry-point-loaded",
   "/src/views/PokeView.vue",
   "/src/views/PokeHistory.vue",
-  "/favicon.ico",
-  "/@id/__x00__plugin-vue:export-helper",
 ];
 
 self.addEventListener("install", (ev) => {
@@ -37,13 +34,31 @@ self.addEventListener("fetch", (ev) => {
     caches
       .match(ev.request)
       .then((result) => {
+        //if request is in cache and has a result:
         if (result) {
-          console.log("petición en cache: ", ev.request.url);
+          console.log("url fetched from cache: ", ev.request.url);
+          return result;
         }
-        return result || fetch(ev.request);
+        //if request isn't in cache:
+        return fetch(ev.request).then((response) => {
+          //if response is not valid
+          if (
+            !response ||
+            response.status !== 200 ||
+            response.type !== "basic"
+          ) {
+            return response;
+          }
+          //if response is valid
+          const evResponse = response.clone();
+          caches.open(pokeCache).then((cache) => {
+            cache.put(ev.request, evResponse);
+          });
+          return response;
+        });
       })
       .catch((error) => {
-        console.error("Error petición no encontrada en cache: ", error);
+        console.error("no matches for request: ", error);
       })
   );
 });

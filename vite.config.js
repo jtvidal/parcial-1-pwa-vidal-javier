@@ -15,16 +15,16 @@ export default defineConfig({
     vueJsx(),
     //plugin para utilizar sw con vite, deVOptions para poder
     //utilizarlo en modo desarrollo.
-    VitePWA({
-      injectRegister: null,
-      devOptions: {
-        enabled: true,
-      },
-      workbox: {
-        globPatterns: ['**/*.{js,css,html,vue,png,svg}']
-      },
-      manifest: false,
-    }),
+    // VitePWA({
+    //   injectRegister: null,
+    //   devOptions: {
+    //     enabled: true,
+    //   },
+    //   workbox: {
+    //     globPatterns: ['**/*.{js,css,html,vue,png,svg}']
+    //   },
+    //   manifest: false,
+    // }),
   ],
   resolve: {
     alias: {

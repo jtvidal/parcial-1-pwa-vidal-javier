@@ -33,7 +33,7 @@ export default {
   },
 
   async mounted() {
-    console.log("URL mounted: ", this.url);
+    // console.log("URL mounted: ", this.url);
     this.pokemonList = await getData(this.url);
     await this.getPages(this.url);
     await this.getPokemons();

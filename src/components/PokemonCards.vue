@@ -8,7 +8,7 @@ export default {
     return {};
   },
   async mounted() {
-    console.log("array in PokemonCards", this.arrayPokemon);
+    //console.log("array in PokemonCards", this.arrayPokemon);
   },
   methods: {
     sendId(id) {
@@ -32,13 +32,13 @@ export default {
         />
       </div>
       <h3 class="uppercase font-bold">{{ pokemon.name }}</h3>
-      <div class="w-2/6 xsm:w-2/4">
-        <button
-          @click="sendId(pokemon.id)"
-          class="text-slate-100 bg-rose-700 px-2 py-1 rounded-md hover:bg-rose-500 w-full"
-        >
-        <img src="../assets/pokeball.png" alt="pokeball img">
-          Info
+      <div class="w-2/6 xsm:w-2/4 flex items-center">
+        <button @click="sendId(pokemon.id)" class="px-2 py-1 w-full">
+          <img
+            class="hover:drop-shadow-md mx-auto"
+            src="../assets/pokeball.png"
+            alt="pokeball img"
+          />
         </button>
       </div>
     </div>

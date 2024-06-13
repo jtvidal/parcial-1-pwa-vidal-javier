@@ -9,9 +9,9 @@ export const getData = async (url) => {
   const dataUrl = fetch(url);
   const rawData = await dataUrl;
   const data = await rawData.json();
-  console.log("response: ", data);
+  // console.log("response: ", data);
   const results = data.results;
-  console.log("results: ", results);
+  // console.log("results: ", results);
   return results;
 };
 /**
